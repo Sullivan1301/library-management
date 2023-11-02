@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Library API
   version: 1.0.0
-  description: STD22048
+  description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
 paths:
@@ -61,7 +61,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
   /authors: 
-  #TODO2: complete GET (can be filtered by name) - PUT - DELETE
     get:
       summary: Get all /authors
       description: Retrieve a list of authors, which can be sorted by name
@@ -124,7 +123,6 @@ components:
         bookName:
           type: string
         author:
-          #TODO1: set it as a component with properties : id, name, sex (M or F)
           $ref: '#/components/schemas/Author'
         pageNumbers:
           type: integer
