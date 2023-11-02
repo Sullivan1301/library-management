@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Library API
   version: 1.0.0
-  description: STD22001
+  description: STD22048
 servers:
   - url: https://library.com
 paths:
@@ -47,8 +47,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-  /authors:
+  /authors: 
   #TODO2: complete GET (can be filtered by name) - PUT - DELETE
+    get: 
 components:
   schemas:
     Book:
