@@ -19,6 +19,20 @@ paths:
           schema:
             type: string
         #TODO3: add parameter to filter books by intervals of dates of the releaseDate
+        - in: query 
+          name: releaseDateStart
+          description: Filter books released on or after the specified date
+          required: false
+          schema: 
+            type: string
+            format: date
+        - in: query
+          name: releaseDateEnd
+          description: Filter books released on or before the specified date
+          required: false
+          schema: 
+            type: string
+            format: date
       responses:
         200:
           description: The list of filtered books
@@ -70,7 +84,7 @@ paths:
                 items:
                     $ref: '#/components/schemas/Author'
     put:
-      summary: Create or update a lis of authors
+      summary: Create or update a list of authors
       operationId: crupdateAuthors
       requestBody:
         content:
