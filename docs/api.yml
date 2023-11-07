@@ -118,23 +118,11 @@ components:
     Book:
       type: object
       properties:
-        id:
-          type: string
-        bookName:
-          type: string
+        allOf:
+          $ref: '#/components/schemas/Cruptade'
         author:
           $ref: '#/components/schemas/Author'
-        pageNumbers:
-          type: integer
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
-        releaseDate:
-          type: string
-          format: date
+
     Author:
       type: object
       properties:
