@@ -1,13 +1,15 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.1
+  version: 1.1.2
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
 paths:
   /books:
     get:
+      tags:
+        - "books"
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
@@ -42,6 +44,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
     put:
+      tags:
+        - "books"
       summary: Create or update a list of books
       operationId: crupdateBooks
       requestBody:
@@ -60,6 +64,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+    put:
+      tags:
+        - "books"
+      summary: Modify book's author specifying their ID 
+      
+
   /authors: 
     get:
       summary: Get all /authors
