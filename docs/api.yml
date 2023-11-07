@@ -1,13 +1,18 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.0.0
+  version: 1.1.2
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
+tags:
+  - name: books
+  - name: authors
 paths:
   /books:
     get:
+      tags:
+        - books
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
@@ -42,6 +47,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
     put:
+      tags:
+        - books
       summary: Create or update a list of books
       operationId: crupdateBooks
       requestBody:
@@ -62,7 +69,9 @@ paths:
                   $ref: '#/components/schemas/Book'
   /authors: 
     get:
-      summary: Get all /authors
+      tags:
+        - authors
+      summary: Get all authors
       description: Retrieve a list of authors, which can be sorted by name
       operationId: getAuthors
       parameters:
@@ -74,7 +83,7 @@ paths:
             type: string
       responses:
         200:
-          description: The list of filtered authors
+          description: The list of filtered authors 
           content:
             application/json:
               schema: 
@@ -82,6 +91,8 @@ paths:
                 items:
                     $ref: '#/components/schemas/Author'
     put:
+      tags:
+        - authors
       summary: Create or update a list of authors
       operationId: crupdateAuthors
       requestBody:
@@ -100,19 +111,41 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+  #/authors/{authorId}:
+  # delete:
+  #    tags:
+  #       -authors
+  #   summary: Delete an author
+  #   operationID: deleteAuthor
+  #   parameters:
+  #     -name : authorId
+  #     -in : path
+  #     -description: Author identifier to be deleted
+  #     -schema:
+  #       type: string
+  #     -required: true  
+  #   responses:
+  #     200:
+  #       description: The author deleted
+  #       content:
+  #         application/json: 
+  #           schema:
+  #             $ref: '#/components/schemas/Author'  
     delete:
+      tags:
+        - authors 
       summary: Delete an author
       operationId: deleteAuthor
       parameters:
         - in: query
           name: authorId
-          description: The ID of the author will be deleted
+          description: The author with the ID will be deleted
           required: true
           schema: 
             type: string
       responses:
         200:
-          description: Author ID has been deleted
+          description: Author with ID has been deleted
 components:
   schemas:
     Book:
@@ -122,19 +155,19 @@ components:
           type: string
         bookName:
           type: string
-        author:
-          $ref: '#/components/schemas/Author'
-        pageNumbers:
+        pageNumbers: 
           type: integer
-        topic:
+        topic: 
           type: string
           enum:
             - ROMANCE
             - COMEDY
             - OTHER
-        releaseDate:
+        releasedDate:
           type: string
           format: date
+        author:
+          $ref: '#/components/schemas/Author'
     Author:
       type: object
       properties:
@@ -142,13 +175,12 @@ components:
           type: string
         name:
           type: string
-        sex:
-          $ref : '#/components/schemas/Sex'
-    Sex:
-      type: object
-      properties:
         sex: 
-          type: string
-          enum:
-            - M
-            - F
+          $ref: '#/components/schemas/Sex'
+      #required:
+      #  -id
+    Sex:
+      type: string
+      enum:
+        - M
+        - F
