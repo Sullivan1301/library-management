@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.5
+  version: 1.1.6
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
@@ -183,6 +183,37 @@ paths:
       responses:
         200:
           description: Book authors updated
+  /author/page/{page}/size/{size}:
+    get:
+      tags:
+        - Authors
+      summary: Get paginated authors
+      description: Retrieve a paginated list of authors,
+      operationId: getAuthorsPaginated
+      parameters:
+        - in : path
+          name: page
+          description: Page number for pagination
+          schema:
+            type: integer
+            default: 1
+          required: true
+        - in : path
+          name : size
+          description: Number of items per page for pagination
+          schema:
+            type: integer
+            default: 50
+          required: true
+      responses:
+        200 :
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
 components:
   schemas:
     Book:
