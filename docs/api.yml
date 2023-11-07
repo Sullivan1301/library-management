@@ -143,6 +143,11 @@ components:
         name:
           type: string
         sex:
+          $ref : '#/components/schemas/Sex'
+    Sex:
+      type: object
+      properties:
+        sex: 
           type: string
           enum:
             - M
