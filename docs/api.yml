@@ -113,6 +113,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
     delete:
+      tags:
+        - Authors
       summary: Delete an author
       operationId: deleteAuthor
       parameters:
