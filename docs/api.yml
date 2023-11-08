@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.3
+  version: 1.2.4
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
@@ -202,6 +202,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+  /books/import:
+    post:
+      tags:
+        - Books
+      summary: Import books
+      operationId: importBooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ''
 components:
   schemas:
     Book:
@@ -324,6 +336,21 @@ components:
         error:
           type: string
           example: "Internal Server Error"
+
+    ImportAuthor:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/Author'
+        sex :
+          $ref: '#/components/schemas/Sex'
+
+    ImportBook:
+      type: object
+      properties:
+        book:
+          $ref: '#/components/schemas/Book'
+
   parameters:
     queryPagination:
       name: page
