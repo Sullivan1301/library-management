@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.2
+  version: 1.2.3
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
@@ -252,6 +252,78 @@ components:
         authorId:
          type: string
 
+    BaseApiResponses:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        body:
+          type: object
+
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "Success!"
+
+    ApiResponses200:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+        - properties:
+            body:
+              $ref: '#/components/schemas/BodyFor200'
+
+    ApiResponses400:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+        - properties:
+            body:
+              $ref: '#/components/schemas/BodyFor400'
+
+    ApiResponses403:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+        - properties:
+            body:
+              $ref: '#/components/schemas/BodyFor403'
+
+    ApiResponses500:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+        - properties:
+            body:
+              $ref: '#/components/schemas/BodyFor500'
+    BodyFor200:
+      type: object
+      properties:
+        exampleProprety:
+          type: string
+          example: "It's OK!"
+
+    BodyFor400:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Bad Request!"
+
+    BodyFor403:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Attention! It's Forbidden"
+
+    BodyFor500:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Internal Server Error"
   parameters:
     queryPagination:
       name: page
