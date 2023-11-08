@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.7
+  version: 1.2.8
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
@@ -216,10 +216,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImportBook'
-          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-            schema:
-              $ref: '#/components/schemas/ImportBookExcel'
+              oneOf:
+                - $ref: '#/components/schemas/ImportBook'
+                - $ref: '#/components/schemas/ImportBookExcel'
       responses:
         200:
           description: List of imported books
@@ -234,16 +233,15 @@ paths:
       tags:
         - Authors
       summary: Import authors
-      operationId: inportAuthors
+      operationId: importAuthors
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImportAuthor'
-          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-            schema:
-              $ref: '#/components/schemas/ImportAuthorExcel'
+              oneOf:
+                - $ref: '#/components/schemas/ImportAuthor'
+                - $ref: '#/components/schemas/ImportAuthorExcel'
       responses:
         200:
           description: List of imported authors
@@ -277,6 +275,7 @@ components:
       enum:
        - M
        - F
+
     Cruptade:
       type: object
       properties:
@@ -295,6 +294,7 @@ components:
         releasedDate:
           type: string
           format: date
+
     UpdateBookAuthor:
       type: object
       properties:
@@ -380,13 +380,21 @@ components:
       type: object
       properties:
         author:
-          $ref: '#/components/schemas/Author'
-        sex :
-          $ref: '#/components/schemas/Sex'
+          $ref: '#/components/schemas/ImportData'
 
     ImportBook:
       type: object
       properties:
+        book:
+          $ref: '#/components/schemas/ImportData'
+
+    ImportData:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/Author'
+        sex:
+          $ref: '#/components/schemas/Sex'
         book:
           $ref: '#/components/schemas/Book'
 
