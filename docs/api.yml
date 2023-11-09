@@ -17,6 +17,7 @@ tags:
 paths:
   /books:
     get:
+      
       tags:
         - "books"
       summary: Get all books
@@ -630,3 +631,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/InternalServerException'
+  securitySchemes:
+    library_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: "https://library.com/oauth/authorize"
+          scopes:
+            read: read acces to library ressources
+            write: write acces to ressources
+            admin: full administrative acces to the library
