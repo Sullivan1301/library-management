@@ -17,6 +17,8 @@ tags:
 paths:
   /books:
     get:
+      security:
+        - library_auth: [ ]
       
       tags:
         - "books"
@@ -285,8 +287,12 @@ paths:
 
   /visitors/{visistorsId}/book/{bookId}/borrow:
     post:
+      security:
+        - library_auth: ["admin"]
+      
       tags:
         - visitors
+      
       summary: Visitor borrows a book
       operationId: borrowBook
       parameters:
@@ -312,6 +318,9 @@ paths:
 
   /visitors/{visistorsId}/book/{bookId}/return:
     post:
+      security:
+        - library_auth: ["admin"]
+      
       tags:
         - visitors
       summary: Visitor returns a book
