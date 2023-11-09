@@ -390,6 +390,16 @@ components:
           type: string
         reference:
           type: string
+
+    ResponseBorrow:
+      allOf:
+        - $ref: '#/components/schemas/APIresponse'
+      description: Book successfully borrowed
+
+    ResponseReturn:
+      allOf:
+        - $ref: '#/components/schemas/APIresponse'
+      description: Book succesfully returned
   parameters:
     QueryPagination:
       name: QueryPagination
@@ -427,3 +437,5 @@ components:
       $ref: "#/components/schemas/Response403"
     500:
       $ref: "#/components/schemas/Response500"
+
+
