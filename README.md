@@ -29,8 +29,8 @@ This OpenAPI spec defines the Library API, allowing you to manage books and auth
 - **PUT /books/authors**: Update authors for books.
   
 ### Import
-- **POST /books/import**:return the list of imported books in JSON or Excel
-- **POST /authors/import**:return the list of imported auhors in JSON or Excel
+- **POST /books/import**: Return the list of imported books in JSON or Excel
+- **POST /authors/import**: Return the list of imported auhors in JSON or Excel
 ## Data Schemas
 
 - **Book**: `id`, `bookName`, `author` (Reference), `pageNumbers`, `topic`, `releaseDate`
