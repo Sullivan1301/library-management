@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Library API
   version: 1.3.9
-  description: | 
+  description: |
     L2 - H2
     STD22048 RAKOTONIAINA Joro Sullivan
     STD22005 Fanomezana Nathanael
@@ -283,7 +283,7 @@ paths:
       operationId: getBorrowedBooks
       responses:
         200:
-         $ref: '#/components/schemas/ResponseBooksList'
+          $ref: "#/components/schemas/ResponseBooksList"
 
   /books/available:
     get:
@@ -293,7 +293,7 @@ paths:
       operationId: getAvailableBooks
       responses:
         200:
-          $ref: '#/components/schemas/ResponseBooksList'
+          $ref: "#/components/schemas/ResponseBooksList"
 
   /visitors/{visitorId}/activities:
     get:
@@ -302,13 +302,13 @@ paths:
       summary: Get visitor activities for specified period
       operationId: getVisitorActivities
       parameters:
-        - in : path
+        - in: path
           name: visitorId
           description: Id of the Visitor
           required: true
           schema:
             type: string
-        - in : query
+        - in: query
           name: startDate
           description: Start Date of the period
           required: true
@@ -330,7 +330,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Activity'
+                  $ref: "#/components/schemas/Activity"
 
 components:
   schemas:
@@ -350,7 +350,7 @@ components:
         activities:
           type: array
           items:
-            $ref: '#/components/schemas/Activity'
+            $ref: "#/components/schemas/Activity"
     Author:
       type: object
       properties:
@@ -455,20 +455,20 @@ components:
         activities:
           type: array
           items:
-            $ref: '#/components/schemas/Activity'
+            $ref: "#/components/schemas/Activity"
     ResponseBorrow:
       allOf:
-        - $ref: '#/components/schemas/APIresponse'
+        - $ref: "#/components/schemas/APIresponse"
       description: Book successfully borrowed
 
     ResponseReturn:
       allOf:
-        - $ref: '#/components/schemas/APIresponse'
+        - $ref: "#/components/schemas/APIresponse"
       description: Book succesfully returned
 
     ResponseBooksList:
       allOf:
-        - $ref: '#/components/schemas/APIresponse'
+        - $ref: "#/components/schemas/APIresponse"
       description: List of books
 
     Activity:
@@ -486,9 +486,16 @@ components:
             - borrow
             - return
         timestamp:
-           type: string
-           format: datetime
-
+          type: string
+          format: datetime
+    
+    Exception:
+          type: object
+          properties:
+            type:
+              type: string
+            message:
+              type: string
 
   parameters:
     QueryPagination:
@@ -521,11 +528,3 @@ components:
   responses:
     200:
       $ref: "#/components/schemas/Response200"
-    400:
-      $ref: "#/components/schemas/Response400"
-    403:
-      $ref: "#/components/schemas/Response403"
-    500:
-      $ref: "#/components/schemas/Response500"
-
-
