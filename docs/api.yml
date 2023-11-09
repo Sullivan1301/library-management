@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.3.2
+  version: 1.3.3
   description: | 
     L2 - H2
     STD22048 RAKOTONIAINA Joro Sullivan
@@ -13,6 +13,7 @@ tags:
   - name: authors
   - name: books and authors relation
   - name: import
+  - name: visitors
 paths:
   /books:
     get:
@@ -231,6 +232,25 @@ paths:
       responses:
         200:
           $ref: "#/components/responses/200"
+
+  /visitors/visistors{Id}/book/borrow:
+    post:
+      summary: Visitor borrows a book
+      operationId: borrowBook
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bookId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Book successfully borrowed
 components:
   schemas:
     Book:
