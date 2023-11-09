@@ -410,20 +410,7 @@ components:
         - $ref: "#/components/schemas/APIresponse"
       description: operation successfully
 
-    Response400:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: Bad resquest
-
-    Response403:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: Forbidden
-
-    Response500:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: Internal server error
+    
 
     ImportAuthor:
       type: object
@@ -544,5 +531,11 @@ components:
             type: integer
             default: 50
   responses:
-    200:
+    '200':
       $ref: "#/components/schemas/Response200"
+    '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
