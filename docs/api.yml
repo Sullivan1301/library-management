@@ -539,3 +539,9 @@ components:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequestException'
+    '403':
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotAuthorizedException'
