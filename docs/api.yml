@@ -9,6 +9,7 @@ tags:
   - name: books
   - name: authors
   - name: books and authors relation
+  - name: import
 paths:
   /books:
     get:
@@ -185,6 +186,8 @@ paths:
 
   /books/import:
     post:
+      tags:
+        - "import"
       summary: return the list of imported books in JSON or Excel
       operationId: booksImported
       requestBody:
@@ -205,6 +208,8 @@ paths:
           $ref: "#/components/responses/200"
   /authors/import:
     post:
+      tags:
+        - "import"
       summary: return the list imported of Author in JSON or Excel
       operationId: AuthorImport
       requestBody:
