@@ -239,7 +239,11 @@ components:
       properties:
         author:
           $ref: "#/components/schemas/Author"
-
+        status:
+          type: string
+          enum:
+            - available
+            - borrowed
     Author:
       type: object
       properties:
