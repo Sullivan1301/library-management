@@ -46,7 +46,7 @@ paths:
             format: datetime
 
       responses:
-        200:
+        '200':
           description: The list of filtered books
           content:
             application/json:
@@ -54,6 +54,13 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Book"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+        
     put:
       tags:
         - "books"
@@ -67,7 +74,7 @@ paths:
               items:
                 $ref: "#/components/schemas/Book"
       responses:
-        200:
+        '200':
           description: The list of created or updated books
           content:
             application/json:
@@ -75,6 +82,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Book"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /authors:
     get:
@@ -89,7 +102,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: the list of filtered authors
           content:
             application/json:
@@ -97,6 +110,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Author"
+        '400':
+          $ref: '#/components/responses/400'      
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     put:
       tags:
         - "authors"
@@ -118,6 +137,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Author"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       tags:
         - "authors"
@@ -130,8 +155,10 @@ paths:
           schema:
             type: string
       responses:
-        204:
+        '204':
           description: author deleted
+        '500':
+          $ref: '#/components/responses/500'
 
   /authors/{PathPagination}:
     get:
@@ -142,8 +169,14 @@ paths:
         - $ref: "#/components/parameters/PathPagination"
 
       responses:
-        200:
+        '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /books/{bookId}/authors/{authorId}:
     put:
@@ -165,10 +198,12 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: Author of the book updated successfully
-        404:
+        '404':
           description: author or book's id not found
+        '500':
+          $ref: '#/components/responses/500'
   /books/authors:
     put:
       tags:
@@ -183,10 +218,12 @@ paths:
               items:
                 $ref: "#/components/schemas/UpdateBookAuthor"
       responses:
-        200:
+        '200':
           description: Authors for books updated successfully
-        404:
+        '404':
           description: authors or books not found
+        '500':
+          $ref: '#/components/responses/500'
 
   /books/import:
     post:
@@ -208,8 +245,14 @@ paths:
                 $ref: "#/components/schemas/ImportBook"
 
       responses:
-        200:
+        '200':
           $ref: "#/components/responses/200"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /authors/import:
     post:
       tags:
@@ -230,8 +273,14 @@ paths:
                 $ref: "#/components/schemas/ImportAuthor"
 
       responses:
-        200:
+        '200':
           $ref: "#/components/responses/200"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /visitors/{visistorsId}/book/{bookId}/borrow:
     post:
@@ -251,8 +300,14 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: Book successfully borrowed
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /visitors/{visistorsId}/book/{bookId}/return:
     post:
@@ -272,8 +327,14 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: Book successfully returned
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /books/borrowed:
     get:
@@ -282,8 +343,14 @@ paths:
       summary: Get the list of borrowed books
       operationId: getBorrowedBooks
       responses:
-        200:
-          $ref: "#/components/schemas/ResponseBooksList"
+        '200':
+          $ref: "#/components/responses/200"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /books/available:
     get:
@@ -292,8 +359,14 @@ paths:
       summary: Get the list of available book
       operationId: getAvailableBooks
       responses:
-        200:
-          $ref: "#/components/schemas/ResponseBooksList"
+        '200':
+          $ref: "#/components/responses/200"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /visitors/{visitorId}/activities:
     get:
@@ -323,7 +396,7 @@ paths:
             type: string
             format: datetime
       responses:
-        200:
+        '200':
           description: List of visitor activities
           content:
             application/json:
@@ -331,6 +404,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Activity"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
 components:
   schemas:
