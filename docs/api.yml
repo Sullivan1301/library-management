@@ -261,6 +261,9 @@ paths:
           $ref: '#/components/responses/500'
   /authors/import:
     post:
+      security:
+        - library_auth: ["admin"]
+      
       tags:
         - "import"
       summary: return the list imported of Author in JSON or Excel
