@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.3.9
+  version: 1.3.11
   description: |
     L2 - H2
     STD22048 RAKOTONIAINA Joro Sullivan
@@ -538,20 +538,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Activity"
-    ResponseBorrow:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: Book successfully borrowed
-
-    ResponseReturn:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: Book succesfully returned
-
-    ResponseBooksList:
-      allOf:
-        - $ref: "#/components/schemas/APIresponse"
-      description: List of books
+   
 
     Activity:
       type: object
