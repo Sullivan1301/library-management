@@ -335,6 +335,7 @@ components:
             body:
               $ref: '#/components/schemas/BodyFor400'
 
+
     ApiResponses403:
       allOf:
         - $ref: '#/components/schemas/BaseApiResponses'
@@ -348,33 +349,46 @@ components:
         - properties:
             body:
               $ref: '#/components/schemas/BodyFor500'
+              
     BodyFor200:
       type: object
       properties:
-        exampleProprety:
+        example:
           type: string
           example: "It's OK!"
 
-    BodyFor400:
-      type: object
+    BookList200:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
       properties:
-        error:
-          type: string
-          example: "Bad Request!"
+        body: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Book'
+
+    BodyFor400:
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+          body: {}
+          example:
+            code : 400
+            description:  "Bad Request!"
 
     BodyFor403:
-      type: object
-      properties:
-        error:
-          type: string
-          example: "Attention! It's Forbidden"
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+          body : {}
+          example: 
+            code: 403
+            default: "Forbidden"
 
     BodyFor500:
-      type: object
-      properties:
-        error:
-          type: string
-          example: "Internal Server Error"
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+          body: {}
+          example: 
+            code: 500
+            description: "Internal Servor Error"
 
     ImportAuthor:
       type: object
@@ -425,3 +439,17 @@ components:
           pageSize:
             type: integer
             default: 50
+
+  responses: 
+    "BookList200":
+      $ref: '#/components/schemas/BookList200'    
+      description: Return list of book
+
+    400:
+      $ref: '#/components/schemas/BodyFor400'
+
+    403:
+      $ref: '#/components/schemas/BodyFor403'
+
+    500:
+      $ref: '#/components/schemas/BodyFor500'    
