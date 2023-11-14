@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.9
+  version: 1.2.10
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
@@ -294,13 +294,6 @@ components:
         authorId:
          type: string
 
-    BaseApiResponses:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-        body:
-          type: object
 
     Status:
       type: object
@@ -311,13 +304,62 @@ components:
         message:
           type: string
           example: "Success!"
+    ImportData:
+      oneOf:
+        - $ref: '#/components/responses/ImportAuthor'
+        - $ref: '#/components/responses/ImportBook'
 
-    ApiResponses200:
+
+    BodyFor200:
+      type: object
+      properties:
+        example:
+          type: string
+          example: "It's OK!"
+
+    BookList200:
       allOf:
         - $ref: '#/components/schemas/BaseApiResponses'
-        - properties:
-            body:
-              $ref: '#/components/schemas/BodyFor200'
+      properties:
+        body: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Book'
+
+
+  parameters:
+    queryPagination:
+      name: page
+      in: query
+      description: Page's number for the pagination
+      required: false
+      schema:
+        type: object
+        properties:
+          page:
+            type: integer
+            default: 1
+          pageSize:
+            type: integer
+            default: 50
+
+  responses: 
+    BookList200:
+      $ref: '#/components/responses/BookList200'
+      description: Return list of book
+
+    AuthorList200:
+      $ref: '#/components/responses/AuthorList200'
+      description: Return List of Authors
+
+    400:
+      $ref: '#/components/responses/ApiResponses400'
+
+    403:
+      $ref: '#/components/responses/ApiResponses403'
+
+    500:
+      $ref: '#/components/responses/ApiResponses500'
 
     ApiResponses400:
       allOf:
@@ -340,44 +382,34 @@ components:
         - properties:
             body:
               $ref: '#/components/schemas/BodyFor500'
-              
-    BodyFor200:
+
+    BaseApiResponses:
       type: object
       properties:
-        example:
-          type: string
-          example: "It's OK!"
-
-    BookList200:
-      allOf:
-        - $ref: '#/components/schemas/BaseApiResponses'
-      properties:
-        body: 
-          type: array
-          items: 
-            $ref: '#/components/schemas/Book'
+        status:
+          $ref: '#/components/schemas/Status'
+        body:
+          type: object
 
     BodyFor400:
-      allOf:
-        - $ref: '#/components/schemas/BaseApiResponses'
-          body: {}
+      type: object
+      properties:
           example:
-            code : 400
-            description:  "Bad Request!"
+            type: string
+            example: "Bad Request!"
 
     BodyFor403:
-      allOf:
-        - $ref: '#/components/schemas/BaseApiResponses'
-          body : {}
-          example: 
-            code: 403
-            default: "Forbidden"
+      type: object
+      proprerties:
+        example:
+          type: string
+          example:
 
     BodyFor500:
       allOf:
         - $ref: '#/components/schemas/BaseApiResponses'
-          body: {}
-          example: 
+          body: { }
+          example:
             code: 500
             description: "Internal Servor Error"
 
@@ -395,10 +427,6 @@ components:
         - properties:
             idAuthor:
               type: integer
-    ImportData:
-      oneOf:
-        - $ref: '#/components/schemas/ImportAuthor'
-        - $ref: '#/components/schemas/ImportBook'
 
     ImportAuthorExcel:
       type: object
@@ -412,32 +440,18 @@ components:
         file:
           description: Excel file containing book information
 
-  parameters:
-    queryPagination:
-      name: page
-      in: query
-      description: Page's number for the pagination
+  requestBodies:
+    ImportAuthorExcel:
       required: false
-      schema:
-        type: object
-        properties:
-          page:
-            type: integer
-            default: 1
-          pageSize:
-            type: integer
-            default: 50
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImportAuthor'
 
-  responses: 
-    "BookList200":
-      $ref: '#/components/schemas/BookList200'    
-      description: Return list of book
+    ImportBookExcel:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImportBook'
 
-    400:
-      $ref: '#/components/schemas/BodyFor400'
-
-    403:
-      $ref: '#/components/schemas/BodyFor403'
-
-    500:
-      $ref: '#/components/schemas/BodyFor500'    
