@@ -1,19 +1,19 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.10
-  description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
+  version: 1.2.11
+  description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan
 servers:
   - url: https://library.com
 tags:
-  - Books
-  - Authors
-  - Import
+  - name: Books
+  - name: Authors
+  - name: Import
 paths:
   /books:
     get:
       tags:
-        - Books     
+        - Books
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
@@ -25,18 +25,18 @@ paths:
           required: false
           schema:
             type: string
-        - in: query 
+        - in: query
           name: releaseDateStart
           description: Filter books released on or after the specified date
           required: false
-          schema: 
+          schema:
             type: string
             format: date
         - in: query
           name: releaseDateEnd
           description: Filter books released on or before the specified date
           required: false
-          schema: 
+          schema:
             type: string
             format: date
       responses:
@@ -64,7 +64,7 @@ paths:
         200:
           $ref: '#/components/schemas/BookList200'
 
-  /authors: 
+  /authors:
     get:
       tags:
         - Authors
@@ -75,19 +75,19 @@ paths:
         - $ref: '#/components/parameters/queryPagination'
         - in : query
           name: authorName
-          description: Filter return authors by given name 
+          description: Filter return authors by given name
           required: false
-          schema: 
+          schema:
             type: string
       responses:
         200:
           description: The list of filtered authors
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
-                    $ref: '#/components/schemas/Author'
+                  $ref: '#/components/schemas/Author'
     put:
       tags:
         - Authors
@@ -119,7 +119,7 @@ paths:
           name: authorId
           description: The ID of the author will be deleted
           required: true
-          schema: 
+          schema:
             type: string
       responses:
         200:
@@ -221,7 +221,7 @@ paths:
                 - $ref: '#/components/schemas/ImportBookExcel'
       responses:
         200:
-         $ref: '#/components/schemas/BookList200'
+          $ref: '#/components/schemas/BookList200'
 
   /authors/import:
     post:
@@ -240,7 +240,7 @@ paths:
                 - $ref: '#/components/schemas/ImportAuthorExcel'
       responses:
         200:
-         $ref: '#/components/schemas/AuthorList200'
+          $ref: '#/components/schemas/AuthorList200'
 
 components:
   schemas:
@@ -264,19 +264,19 @@ components:
     Sex:
       type: string
       enum:
-       - M
-       - F
+        - M
+        - F
 
     Cruptade:
       type: object
       properties:
         id:
-          type: string  
+          type: string
         bookName:
-          type: string 
+          type: string
         pageNumbers:
           type: integer
-        topic: 
+        topic:
           type: string
           enum:
             - ROMANCE
@@ -290,9 +290,9 @@ components:
       type: object
       properties:
         bookId:
-         type: string
+          type: string
         authorId:
-         type: string
+          type: string
 
 
     Status:
@@ -304,11 +304,6 @@ components:
         message:
           type: string
           example: "Success!"
-    ImportData:
-      oneOf:
-        - $ref: '#/components/responses/ImportAuthor'
-        - $ref: '#/components/responses/ImportBook'
-
 
     BodyFor200:
       type: object
@@ -321,45 +316,62 @@ components:
       allOf:
         - $ref: '#/components/schemas/BaseApiResponses'
       properties:
-        body: 
+        body:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/Book'
 
-
-  parameters:
-    queryPagination:
-      name: page
-      in: query
-      description: Page's number for the pagination
-      required: false
-      schema:
-        type: object
-        properties:
-          page:
-            type: integer
-            default: 1
-          pageSize:
-            type: integer
-            default: 50
-
-  responses: 
-    BookList200:
-      $ref: '#/components/responses/BookList200'
-      description: Return list of book
-
     AuthorList200:
-      $ref: '#/components/responses/AuthorList200'
-      description: Return List of Authors
+      allOf:
+        - $ref: '#/components/schemas/BaseApiResponses'
+      properties:
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
 
-    400:
-      $ref: '#/components/responses/ApiResponses400'
+    ImportAuthor:
+      type: object
+      properties:
+        file:
+          description: JSON file containing book information
+          type: string
+          format: binary
 
-    403:
-      $ref: '#/components/responses/ApiResponses403'
+    ImportBook:
+      type: object
+      properties:
+        file:
+          description: JSON file containing book information
+          type: string
+          format: binary
 
-    500:
-      $ref: '#/components/responses/ApiResponses500'
+    ImportData:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/ImportAuthor'
+        - $ref: '#/components/schemas/ImportBook'
+      properties:
+        file:
+          description: Import data in either JSON or Excel format
+          type: string
+          format: binary
+
+    ImportAuthorExcel:
+      type: object
+      properties:
+        file:
+          description: Excel file containing author information
+          type: string
+          format: binary
+
+    ImportBookExcel:
+      type: object
+      properties:
+        file:
+          description: Excel file containing book information
+          type: string
+          format: binary
 
     ApiResponses400:
       allOf:
@@ -367,7 +379,6 @@ components:
         - properties:
             body:
               $ref: '#/components/schemas/BodyFor400'
-
 
     ApiResponses403:
       allOf:
@@ -394,64 +405,70 @@ components:
     BodyFor400:
       type: object
       properties:
-          example:
-            type: string
-            example: "Bad Request!"
+        example:
+          type: string
+          example: "Bad Request!"
 
     BodyFor403:
       type: object
-      proprerties:
+      properties:
         example:
           type: string
-          example:
+          example: "Forbidden"
 
     BodyFor500:
-      allOf:
-        - $ref: '#/components/schemas/BaseApiResponses'
-          body: { }
-          example:
-            code: 500
-            description: "Internal Servor Error"
-
-    ImportAuthor:
       type: object
       properties:
-        author:
+        example:
           type: string
-        sex:
-          $ref: '#/components/schemas/Sex'
+          example: "Internal Server Error"
 
-    ImportBook:
-      allOf:
-        - $ref: '#/components/schemas/Cruptade'
-        - properties:
-            idAuthor:
-              type: integer
-
-    ImportAuthorExcel:
-      type: object
-      properties:
-        file:
-          description: Excel file containing author information
-
-    ImportBookExcel:
-      type: object
-      properties:
-        file:
-          description: Excel file containing book information
-
-  requestBodies:
-    ImportAuthorExcel:
+  parameters:
+    queryPagination:
+      name: page
+      in: query
+      description: Page's number for the pagination
       required: false
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImportAuthor'
+      schema:
+        type: object
+        properties:
+          page:
+            type: integer
+            default: 1
+          pageSize:
+            type: integer
+            default: 50
 
-    ImportBookExcel:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ImportBook'
+responses:
+  BookList200:
+    $ref: '#/components/schemas/BookList200'
+    description: Return list of book
 
+  AuthorList200:
+    $ref: '#/components/schemas/AuthorList200'
+    description: Return List of Authors
+
+  400:
+    $ref: '#/components/schemas/ApiResponses400'
+
+  403:
+    $ref: '#/components/schemas/ApiResponses403'
+
+  500:
+    $ref: '#/components/schemas/ApiResponses500'
+
+
+requestBodies:
+  ImportAuthorExcel:
+    required: false
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ImportAuthor'
+
+  ImportBookExcel:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/ImportBook'
