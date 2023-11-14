@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.11
+  version: 1.2.12
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan
 servers:
   - url: https://library.com
@@ -439,36 +439,34 @@ components:
             type: integer
             default: 50
 
-responses:
-  BookList200:
-    $ref: '#/components/schemas/BookList200'
-    description: Return list of book
+  responses:
+    BookList200:
+      $ref: '#/components/schemas/BookList200'
 
-  AuthorList200:
-    $ref: '#/components/schemas/AuthorList200'
-    description: Return List of Authors
+    AuthorList200:
+      $ref: '#/components/schemas/AuthorList200'
 
-  400:
-    $ref: '#/components/schemas/ApiResponses400'
+    400:
+      $ref: '#/components/schemas/ApiResponses400'
 
-  403:
-    $ref: '#/components/schemas/ApiResponses403'
+    403:
+      $ref: '#/components/schemas/ApiResponses403'
 
-  500:
-    $ref: '#/components/schemas/ApiResponses500'
+    500:
+      $ref: '#/components/schemas/ApiResponses500'
 
 
-requestBodies:
-  ImportAuthorExcel:
-    required: false
-    content:
-      application/json:
-        schema:
-          $ref: '#/components/schemas/ImportAuthor'
+  requestBodies:
+    ImportAuthorExcel:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImportAuthor'
 
-  ImportBookExcel:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: '#/components/schemas/ImportBook'
+    ImportBookExcel:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImportBook'
