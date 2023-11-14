@@ -1,13 +1,14 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.8
+  version: 1.2.9
   description: STD22048 - H2 - L2  RAKOTONIAINA Joro Sullivan 
 servers:
   - url: https://library.com
 tags:
   - Books
   - Authors
+  - Import
 paths:
   /books:
     get:
@@ -46,7 +47,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/BookList200'
     put:
       tags:
         - Books
@@ -61,13 +62,7 @@ paths:
                 $ref: '#/components/schemas/Book'
       responses:
         200:
-          description: The list of created or updated books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+          $ref: '#/components/schemas/BookList200'
 
   /authors: 
     get:
@@ -129,6 +124,7 @@ paths:
       responses:
         200:
           description: Author ID has been deleted
+
   /books/{bookId}/authors/{authorId}:
     put:
       tags:
@@ -157,6 +153,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+
   /books/authors:
     put:
       tags:
@@ -174,6 +171,7 @@ paths:
       responses:
         200:
           description: Book authors updated
+
   /author/page/{page}/size/{size}:
     get:
       tags:
@@ -205,10 +203,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+
   /books/import:
     post:
       tags:
         - Books
+        - Import
       summary: Import books
       operationId: importBooks
       requestBody:
@@ -221,17 +221,13 @@ paths:
                 - $ref: '#/components/schemas/ImportBookExcel'
       responses:
         200:
-          description: List of imported books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+         $ref: '#/components/schemas/BookList200'
+
   /authors/import:
     post:
       tags:
         - Authors
+        - Import
       summary: Import authors
       operationId: importAuthors
       requestBody:
@@ -244,13 +240,8 @@ paths:
                 - $ref: '#/components/schemas/ImportAuthorExcel'
       responses:
         200:
-          description: List of imported authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+         $ref: '#/components/schemas/AuthorList200'
+
 components:
   schemas:
     Book:
@@ -394,23 +385,20 @@ components:
       type: object
       properties:
         author:
-          $ref: '#/components/schemas/ImportData'
-
-    ImportBook:
-      type: object
-      properties:
-        book:
-          $ref: '#/components/schemas/ImportData'
-
-    ImportData:
-      type: object
-      properties:
-        author:
-          $ref: '#/components/schemas/Author'
+          type: string
         sex:
           $ref: '#/components/schemas/Sex'
-        book:
-          $ref: '#/components/schemas/Book'
+
+    ImportBook:
+      allOf:
+        - $ref: '#/components/schemas/Cruptade'
+        - properties:
+            idAuthor:
+              type: integer
+    ImportData:
+      oneOf:
+        - $ref: '#/components/schemas/ImportAuthor'
+        - $ref: '#/components/schemas/ImportBook'
 
     ImportAuthorExcel:
       type: object
